@@ -1,0 +1,72 @@
+name: mubs_ui_1_3
+description: A new Flutter application.
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+# For information on the generic Dart part of this file, see the
+# following page: https://www.dartlang.org/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/splash_cachet_old.png
+    - assets/splashBackground.png
+    - assets/mainBackground.png
+    - assets/detail_icons/free.png
+    - assets/detail_icons/general.png
+    - assets/detail_icons/movement.png
+    - assets/detail_icons/practical.png
+    - assets/detail_icons/sleep.png
+    - assets/detail_icons/social.png
+    - assets/detail_icons/work.png
+    - assets/difficulty_icons/level1.png
+    - assets/difficulty_icons/level2.png
+    - assets/difficulty_icons/level3.png
+    - assets/difficulty_icons/level1white.png
+    - assets/difficulty_icons/level2white.png
+    - assets/difficulty_icons/level3white.png
+
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.io/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.io/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  fonts:
+    - family: flaticon
+      fonts:
+        - asset: assets/fonts/ABC.ttf
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.io/custom-fonts/#from-packages
