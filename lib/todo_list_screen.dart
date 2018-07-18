@@ -6,8 +6,9 @@ import 'package:mubs_ui_1_3/Info/DifficultyInfo.dart';
 import 'package:mubs_ui_1_3/create_todo_dialog.dart';
 import 'package:mubs_ui_1_3/todo.dart';
 import 'package:mubs_ui_1_3/Info/CategoryInfo.dart';
+import 'package:mubs_ui_1_3/todo_tile.dart';
 
-var activeTodosEx = <Todo>[
+var todosEx = <Todo>[
   Todo(title: 'jog for 30 min', category: 'movement', difficulty: 1,),
   Todo(title: 'work on homework', category: 'work & edu', difficulty: 2,),
   Todo(title: 'read a book', category: 'sparetime', difficulty: 3,),
@@ -16,17 +17,6 @@ var activeTodosEx = <Todo>[
   Todo(title: 'make dinner plans', category: 'social', difficulty: 3,),
   Todo(title: 'pot my plants', category: 'other', difficulty: 1,),
 ];
-
-var completedTodosEx = <Todo>[
-  Todo(title: 'a', category: 'movement', difficulty: 1, completed: true),
-  Todo(title: 'b', category: 'work & edu', difficulty: 2, completed: true),
-  Todo(title: 'c', category: 'sparetime', difficulty: 3, completed: true),
-  Todo(title: 'd', category: 'daily living', difficulty: 1, completed: true),
-  Todo(title: 'e', category: 'practical', difficulty: 2, completed: true),
-  Todo(title: 'f', category: 'social', difficulty: 3, completed: true),
-  Todo(title: 'g', category: 'other', difficulty: 1, completed: true),
-];
-
 
 class TodoList extends StatefulWidget {
   @override
@@ -43,7 +33,7 @@ class _TodoListState extends State<TodoList> with TickerProviderStateMixin {
     super.initState();
     _list = ListModel<Todo>(
       listKey: _listKey,
-      initialItems: activeTodosEx,
+      initialItems: todosEx,
       removedItemBuilder: _buildRemovedItem,
     );
   }
@@ -176,92 +166,6 @@ class ListModel<E> {
   E operator[](int index) => _items[index];
   int indexOf(E item) => _items.indexOf(item);
 }
-
-class TodoTile extends StatelessWidget {
-  const TodoTile({
-    Key key,
-    @required this.animation,
-    this.onTap,
-    @required this.todo,
-  }) : assert(animation != null),
-      assert(todo != null),
-      super(key: key);
-
-  final Animation<double> animation;
-  final VoidCallback onTap;
-  final Todo todo;
-
-  @override
-  Widget build(BuildContext context) {
-    Widget categoryAccent = Container(
-      padding: EdgeInsets.all(4.0),
-      width: 15.0,
-      height: 15.0,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: CategoryInfo.getColor(todo.category),
-      ),
-    );
-
-    Widget difficultyImg = Center(
-      child: Image.asset(
-        DifficultyInfo.getColoredAssetKey(todo.difficulty),
-        width: 30.0,
-        height: 30.0,
-      ),
-    );
-
-    TextStyle textStyle = Theme.of(context).textTheme.display1;
-    return new Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: new SizeTransition(
-        axis: Axis.vertical,
-        sizeFactor: animation,
-        child: new GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onTap,
-          child: Container(
-            color: todo.completed ? Colors.grey : Colors.white,
-            constraints: BoxConstraints(
-              minHeight: 45.0,
-            ),
-            child: Container(
-              child: InkWell(
-                highlightColor: todo.completed ? Colors.grey[300] : Colors.grey[700],
-                splashColor: todo.completed ? Colors.grey[300] : Colors.grey[700],
-//                onTap: () {
-//                  _toggleCompleted();
-//                },
-                child: Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        child: categoryAccent,
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      Expanded(
-                        child: Text(
-                          todo.title,
-                        ),
-                      ),
-                      difficultyImg,
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 
 //class TodoList extends StatefulWidget {
 //  @override

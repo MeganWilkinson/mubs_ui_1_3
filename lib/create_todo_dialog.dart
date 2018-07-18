@@ -54,7 +54,7 @@ class _CreateTodoDialogState extends State<CreateTodoDialog> {
       IconData iconData = CategoryInfo.getIconData(category);
 
       return Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(2.0),
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
@@ -66,7 +66,7 @@ class _CreateTodoDialogState extends State<CreateTodoDialog> {
             ),
           ),
           child: IconButton(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(9.0),
               splashColor: Colors.transparent,
               iconSize: 35.0,
               icon: Icon(
@@ -97,7 +97,7 @@ class _CreateTodoDialogState extends State<CreateTodoDialog> {
     Widget _buildDifficultyIcon(int difficulty) {
       return GestureDetector(
         child: Container(
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(9.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: _inputDifficulty == difficulty
