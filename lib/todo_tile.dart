@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:mubs_ui_1_3/todo.dart';
 import 'package:mubs_ui_1_3/Info/CategoryInfo.dart';
 import 'package:mubs_ui_1_3/Info/DifficultyInfo.dart';
+import 'package:mubs_ui_1_3/main.dart';
+import 'todo_list_screen.dart';
 
 const _minRowHeight = 40.0;
 
 class TodoTile extends StatefulWidget {
   final Todo todo;
-  Color categoryColor;
-  String difficultyAssetKey;
+  final Color categoryColor;
+  final String difficultyAssetKey;
 
   TodoTile(this.todo)
       : categoryColor = CategoryInfo.getColor(todo.category),
@@ -25,6 +27,8 @@ class _TodoTileState extends State<TodoTile> {
 
   @override
   void initState() {
+    super.initState();
+
     categoryAccent = Container(
       padding: EdgeInsets.all(4.0),
       width: 15.0,
@@ -44,6 +48,7 @@ class _TodoTileState extends State<TodoTile> {
     );
 
     todoWidget = Container(
+      color: widget.todo.completed ? Colors.grey : Colors.white,
       constraints: BoxConstraints(
         minHeight: _minRowHeight,
       ),
@@ -83,13 +88,41 @@ class _TodoTileState extends State<TodoTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return Container(
+      key: ObjectKey(widget.todo),
       color: widget.todo.completed ? Colors.grey : Colors.white,
-      child: Column(
-        children: <Widget>[
-          todoWidget,
-          Divider(height: 0.0,),
-        ],
+      constraints: BoxConstraints(
+        minHeight: _minRowHeight,
+      ),
+      child: Container(
+        child: InkWell(
+          highlightColor: widget.todo.completed ? Colors.grey[300] : Colors.grey[700],
+          splashColor: widget.todo.completed ? Colors.grey[300] : Colors.grey[700],
+          onTap: () {
+            _toggleCompleted();
+          },
+          child: Padding(
+            padding: EdgeInsets.all(4.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  child: categoryAccent,
+                ),
+                SizedBox(
+                  width: 8.0,
+                ),
+                Expanded(
+                  child: Text(
+                    widget.todo.title,
+                  ),
+                ),
+                difficultyImg,
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -98,9 +131,21 @@ class _TodoTileState extends State<TodoTile> {
     setState(() {
       if (widget.todo.completed) {
         widget.todo.completed = false;
+        setState(() {
+          activeTodosEx.add(widget.todo);
+        });
+        setState(() {
+          completedTodosEx.remove(widget.todo);
+        });
+
       } else {
         widget.todo.completed = true;
+        completedTodosEx.add(widget.todo);
+        activeTodosEx.remove(widget.todo);
       }
+    });
+    setState(() {
+
     });
   }
 
