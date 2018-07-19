@@ -43,6 +43,11 @@ class _TodoListState extends State<TodoList> with TickerProviderStateMixin {
   double _numCompletedLvl2;
   double _numCompletedLvl3;
 
+  int count1;
+  int count2;
+  int count3;
+
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +64,10 @@ class _TodoListState extends State<TodoList> with TickerProviderStateMixin {
     _numCompletedLvl1 = 0.0;
     _numCompletedLvl2 = 0.0;
     _numCompletedLvl3 = 0.0;
+
+    count1 = 0;
+    count2 = 0;
+    count3 = 0;
   }
 
   final _mainSummaryChartSize = const Size(175.0, 175.0);
@@ -70,18 +79,21 @@ class _TodoListState extends State<TodoList> with TickerProviderStateMixin {
         case 1:
           _lvl1Pts += 5.0;
           _numCompletedLvl1 += pts;
+          count1++;
           List<CircularStackEntry> miniData = _generateMiniChartData(_numCompletedLvl1, 1);
           _lvl1ChartKey.currentState.updateData(miniData);
           break;
         case 2:
           _lvl2Pts += 10.0;
           _numCompletedLvl2 += pts;
+          count2++;
           List<CircularStackEntry> miniData = _generateMiniChartData(_numCompletedLvl2, 2);
           _lvl2ChartKey.currentState.updateData(miniData);
           break;
         case 3:
           _lvl3Pts += 15.0;
           _numCompletedLvl3 += pts;
+          count3++;
           List<CircularStackEntry> miniData = _generateMiniChartData(_numCompletedLvl3, 3);
           _lvl3ChartKey.currentState.updateData(miniData);
           break;
@@ -97,23 +109,26 @@ class _TodoListState extends State<TodoList> with TickerProviderStateMixin {
         case 1:
           _lvl1Pts -= 5.0;
           _numCompletedLvl1 -= pts;
+          count1--;
           List<CircularStackEntry> miniData = _generateMiniChartData(_numCompletedLvl1, 1);
           _lvl1ChartKey.currentState.updateData(miniData);
           break;
         case 2:
           _lvl2Pts -= 10.0;
           _numCompletedLvl2 -= pts;
+          count2--;
           List<CircularStackEntry> miniData = _generateMiniChartData(_numCompletedLvl2, 2);
           _lvl2ChartKey.currentState.updateData(miniData);
           break;
         case 3:
           _lvl3Pts -= 15.0;
           _numCompletedLvl3 -= pts;
+          count3--;
           List<CircularStackEntry> miniData = _generateMiniChartData(_numCompletedLvl3, 3);
           _lvl3ChartKey.currentState.updateData(miniData);
           break;
       }
-      List<CircularStackEntry> data = _generateChartData2();
+      List<CircularStackEntry> data = _generateChartData();
       _mainSummaryChartKey.currentState.updateData(data);
     });
   }
@@ -348,81 +363,99 @@ class _TodoListState extends State<TodoList> with TickerProviderStateMixin {
           slivers: <Widget>[
             SliverAppBar(
               //pinned: true,
-              expandedHeight: 75.0,
+              expandedHeight: 60.0,
               flexibleSpace: const FlexibleSpaceBar(
                 title: const Text('Todos'),
               ),
             ),
             SliverToBoxAdapter(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              child: Column(
                 children: <Widget>[
-                  AnimatedCircularChart(
-                    key: _mainSummaryChartKey,
-                    size: _mainSummaryChartSize,
-                    initialChartData: _generateChartData(),
-                    chartType: CircularChartType.Radial,
-                    edgeStyle: SegmentEdgeStyle.round,
-                    percentageValues: true,
-                    holeLabel: 'Completed\n    Todos',
-                    //labelStyle: _labelStyle,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Row(
+                      AnimatedCircularChart(
+                        key: _mainSummaryChartKey,
+                        size: _mainSummaryChartSize,
+                        initialChartData: _generateChartData(),
+                        chartType: CircularChartType.Radial,
+                        edgeStyle: SegmentEdgeStyle.round,
+                        percentageValues: true,
+                        holeLabel: 'Completed\n    Todos',
+                        //labelStyle: _labelStyle,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          AnimatedCircularChart(
-                            key: _lvl1ChartKey,
-                            size: _miniSubSummaryChartSize,
-                            initialChartData: _generateMiniChartData(0.0, 1),
-                            chartType: CircularChartType.Radial,
-                            edgeStyle: SegmentEdgeStyle.round,
-                            percentageValues: true,
+                          Row(
+                            children: <Widget>[
+                              AnimatedCircularChart(
+                                key: _lvl1ChartKey,
+                                size: _miniSubSummaryChartSize,
+                                initialChartData: _generateMiniChartData(0.0, 1),
+                                chartType: CircularChartType.Radial,
+                                edgeStyle: SegmentEdgeStyle.round,
+                                percentageValues: true,
+                                holeLabel: '$count1',
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(
+                                  'Level 1'
+                                ),
+                              ),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              'Level 1'
-                            ),
+                          Row(
+                            children: <Widget>[
+                              AnimatedCircularChart(
+                                key: _lvl2ChartKey,
+                                size: _miniSubSummaryChartSize,
+                                initialChartData: _generateMiniChartData(0.0, 2),
+                                chartType: CircularChartType.Radial,
+                                edgeStyle: SegmentEdgeStyle.round,
+                                percentageValues: true,
+                                holeLabel: '$count2',
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(
+                                  'Level 2'
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              AnimatedCircularChart(
+                                key: _lvl3ChartKey,
+                                size: _miniSubSummaryChartSize,
+                                initialChartData: _generateMiniChartData(0.0, 3),
+                                chartType: CircularChartType.Radial,
+                                edgeStyle: SegmentEdgeStyle.round,
+                                percentageValues: true,
+                                holeLabel: '$count3',
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Text(
+                                  'Level 3'
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      Row(
-                        children: <Widget>[
-                          AnimatedCircularChart(
-                            key: _lvl2ChartKey,
-                            size: _miniSubSummaryChartSize,
-                            initialChartData: _generateMiniChartData(0.0, 2),
-                            chartType: CircularChartType.Radial,
-                            edgeStyle: SegmentEdgeStyle.round,
-                            percentageValues: true,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              'Level 2'
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          AnimatedCircularChart(
-                            key: _lvl3ChartKey,
-                            size: _miniSubSummaryChartSize,
-                            initialChartData: _generateMiniChartData(0.0, 3),
-                            chartType: CircularChartType.Radial,
-                            edgeStyle: SegmentEdgeStyle.round,
-                            percentageValues: true,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              'Level 3'
-                            ),
-                          ),
-                        ],
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Today\'s points: ${(_lvl1Pts+_lvl2Pts+_lvl3Pts).toInt()}'
                       ),
                     ],
                   ),
@@ -554,4 +587,35 @@ var todosEx = <Todo>[
     category: 'other',
     difficulty: 2,
   ),
+  Todo(
+    title: 'template',
+    category: 'other',
+    difficulty: 3,
+  ),
+  Todo(
+    title: 'template',
+    category: 'other',
+    difficulty: 1,
+  ),
+  Todo(
+    title: 'template',
+    category: 'other',
+    difficulty: 2,
+  ),
+  Todo(
+    title: 'template',
+    category: 'other',
+    difficulty: 3,
+  ),
+  Todo(
+    title: 'template',
+    category: 'other',
+    difficulty: 1,
+  ),
+  Todo(
+    title: 'template',
+    category: 'other',
+    difficulty: 2,
+  ),
+
 ];
