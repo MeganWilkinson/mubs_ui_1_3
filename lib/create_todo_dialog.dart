@@ -134,6 +134,7 @@ class _CreateTodoDialogState extends State<CreateTodoDialog> {
             ),
           ),
           Row(
+            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _buildCategoryIcon('movement'),
